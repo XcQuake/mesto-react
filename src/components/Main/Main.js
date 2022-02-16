@@ -1,4 +1,5 @@
 import React from 'react';
+import api from '../../utils/api';
 
 export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   const [userName, setUserName] = React.useState();
