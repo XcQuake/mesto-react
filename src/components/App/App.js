@@ -3,6 +3,7 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import ImagePopup from '../ImagePopup/ImagePopup';
 
 function App() {
   const [isEditProfilePopupOpen, openEditProfilePopup] = React.useState(false);
@@ -31,6 +32,7 @@ function App() {
     openEditProfilePopup(false);
     openAddPlacePopupOpen(false);
     openEditAvatarPopup(false);
+    setSelectedCard(false);
   }
 
   return (
@@ -72,6 +74,7 @@ function App() {
       </label>
       <button type="submit" className="button popup__confirm-button">Сохранить</button>
     </PopupWithForm>
+    <ImagePopup card = {selectedCard} onClose = {closeAllPopups}></ImagePopup>
     </>
   );
 };
