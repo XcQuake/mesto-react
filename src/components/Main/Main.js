@@ -1,34 +1,37 @@
 import React from 'react';
 import api from '../../utils/api';
 import Card from '../Card/Card';
+import avatar from '../../images/avatar.jpg';
 
 export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setuserDescription] = React.useState();
-  const [userAvatar, setuserAvatar] = React.useState();
+  const [userName, setUserName] = React.useState('Жак-Ив Кусто');
+  const [userDescription, setUserDescription] = React.useState('Исследователь океана');
+  const [userAvatar, setUserAvatar] = React.useState(avatar);
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api.getUserInfo()
-      .then((data) => {
-        setUserName(data.name);
-        setuserDescription(data.about);
-        setuserAvatar(data.avatar);
+      .then((user) => {
+        setUserName(user.name);
+        setUserDescription(user.about);
+        setUserAvatar(user.avatar);
       })
+      .catch(err => console.log(err))
   }, [])
 
   React.useEffect(() => {
     api.getInitialCards()
-      .then((data) => {
-        setCards(data.map(item => item))
+      .then((cards) => {
+        setCards(cards)
       })
+      .catch(err => console.log(err))
   })
 
   return (
     <main className="main">
       <section className="profile">
         <div className="profile__avatar" onClick={onEditAvatar}>
-          <img className='profile__avatar-image' src={userAvatar} />
+          <img className='profile__avatar-image' src={userAvatar} alt='Аватар' />
         </div>
         <div className="profile__info">
           <h1 className="profile__name">{userName}</h1>
