@@ -10,22 +10,15 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getUserInfo()
-      .then((user) => {
+    api.getFullData()
+      .then(([user, cards]) => {
         setUserName(user.name);
         setUserDescription(user.about);
         setUserAvatar(user.avatar);
-      })
-      .catch(err => console.log(err))
-  }, [])
-
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then((cards) => {
         setCards(cards)
       })
       .catch(err => console.log(err))
-  })
+  }, [])
 
   return (
     <main className="main">

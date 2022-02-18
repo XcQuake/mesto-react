@@ -6,32 +6,35 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import ImagePopup from '../ImagePopup/ImagePopup';
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isImagePopupOpen, setIsimagePopupOpen] = React.useState(false);
 
   const [selectedCard, setSelectedCard] = React.useState({});
 
   function handleEditProfileClick() {
-    setEditProfilePopupOpen(true);
+    setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    setAddPlacePopupOpen(true);
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleEditAvatarClick() {
-    setEditAvatarPopupOpen(true);
+    setIsEditAvatarPopupOpen(true);
   }
 
   function handleCardClick(card) {
     setSelectedCard(card);
+    setIsimagePopupOpen(true);
   }
 
   function closeAllPopups() {
-    setEditProfilePopupOpen(false);
-    setAddPlacePopupOpen(false);
-    setEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsimagePopupOpen(false);
     setSelectedCard({});
   }
 
@@ -71,7 +74,7 @@ function App() {
         <span className="popup__input-error avatar-error"></span>
       </label>
     </PopupWithForm>
-    <ImagePopup card = {selectedCard} onClose = {closeAllPopups}></ImagePopup>
+    <ImagePopup card = {selectedCard} isOpen = {isImagePopupOpen} onClose = {closeAllPopups}></ImagePopup>
     </>
   );
 };
