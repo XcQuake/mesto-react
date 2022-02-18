@@ -12,8 +12,6 @@ function App() {
 
   const [selectedCard, setSelectedCard] = React.useState({});
 
-  console.log(selectedCard)
-
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
   }
