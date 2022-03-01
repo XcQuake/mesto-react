@@ -2,19 +2,15 @@ import React from 'react';
 import api from '../../utils/api';
 import Card from '../Card/Card';
 import avatar from '../../images/avatar.jpg';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
-  const [userName, setUserName] = React.useState('Жак-Ив Кусто');
-  const [userDescription, setUserDescription] = React.useState('Исследователь океана');
-  const [userAvatar, setUserAvatar] = React.useState(avatar);
+  const currentUser = React.useContext(CurrentUserContext);
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api.getFullData()
       .then(([user, cards]) => {
-        setUserName(user.name);
-        setUserDescription(user.about);
-        setUserAvatar(user.avatar);
         setCards(cards)
       })
       .catch(err => console.log(err))
@@ -24,11 +20,11 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
     <main className="main">
       <section className="profile">
         <div className="profile__avatar" onClick={onEditAvatar}>
-          <img className='profile__avatar-image' src={userAvatar} alt='Аватар' />
+          <img className='profile__avatar-image' src={currentUser.avatar} alt='Аватар' />
         </div>
         <div className="profile__info">
-          <h1 className="profile__name">{userName}</h1>
-          <p className="profile__about">{userDescription}</p>
+          <h1 className="profile__name">{currentUser.name}</h1>
+          <p className="profile__about">{currentUser.about}</p>
           <button className="button profile__edit-button" type="button" aria-label="Редактировать" onClick={onEditProfile}></button>
         </div>
         <button className="button profile__add-button" type="button" aria-label="Добавить фото" onClick={onAddPlace}></button>
