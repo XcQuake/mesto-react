@@ -1,6 +1,8 @@
 export default function PopupWithForm({name, title, buttonText, isOpen, onClose, children}) {
+  const popupClassName = (isOpen ? 'popup_opened' : '');
+
   return (
-    <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
+    <div className={`popup popup_type_${name} ${popupClassName}`}>
       <div className="popup__container">
         <button className="button popup__close-button" type="button" aria-label="Закрыть" onClick={onClose}></button>
         <h2 className="popup__title">{title}</h2>
