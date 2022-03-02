@@ -22,7 +22,14 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
       .then((newCard) => {
         setCards((cards) => cards.map((oldCard) => oldCard._id === card._id ? newCard : oldCard));
       })
+      .catch(err => console.log(err))
   };
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(setCards((cards) => cards.filter(oldCard => oldCard._id !== card._id)))
+      .catch(err => console.log(err))
+  }
 
   return (
     <main className="main">
@@ -39,7 +46,11 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
       </section>
       <section className="gallery" aria-label="Галерея">
         <ul className='gallery__list'> 
-          {cards.map((item) => <Card key = {item._id} card = {item} onCardClick = {onCardClick} onCardLike = {handleCardLike}/> )}
+          {cards.map((item) => <Card 
+                                key = {item._id} 
+                                card = {item} onCardClick = {onCardClick} 
+                                onCardLike = {handleCardLike} 
+                                onCardDelete = {handleCardDelete} />)}
         </ul>
       </section>
     </main>

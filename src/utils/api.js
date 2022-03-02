@@ -73,14 +73,6 @@ class Api {
       .then(res => this._processResult(res))
   }
 
-  deleteLikeCard(cardId) {
-    return fetch(`${this._link}/cards/${cardId}/likes`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-      .then(res => this._processResult(res))
-  }
-
   deleteCard(cardId) {
     return fetch(`${this._link}/cards/${cardId}`, {
       method: 'DELETE',
