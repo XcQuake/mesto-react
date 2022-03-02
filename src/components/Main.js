@@ -1,7 +1,7 @@
 import React from 'react';
-import api from '../../utils/api';
-import Card from '../Card/Card';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import api from '../utils/api';
+import Card from './Card';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   const currentUser = React.useContext(CurrentUserContext);
