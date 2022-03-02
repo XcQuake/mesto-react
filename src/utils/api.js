@@ -65,9 +65,9 @@ class Api {
       .then(res => this._processResult(res))
   }
 
-  putLikeCard(cardId) {
+  changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._link}/cards/${cardId}/likes`, {
-      method: 'PUT',
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
       headers: this._headers
     })
       .then(res => this._processResult(res))

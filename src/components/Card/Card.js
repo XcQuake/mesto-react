@@ -1,9 +1,13 @@
 import React from 'react';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export default function Card({card, onCardClick}) {
+export default function Card({card, onCardClick, onCardLike}) {
   function handleClick() {
-   onCardClick(card);
+    onCardClick(card);
+  }
+
+  function handleLikeClick() {
+    onCardLike(card);
   }
 
   const currentUser = React.useContext(CurrentUserContext);
@@ -24,7 +28,7 @@ export default function Card({card, onCardClick}) {
       <div className="card__description">
         <h2 className="card__title">{card.name}</h2>
         <div className="card__like">
-          <button className={cardLikeButtonClassName} type="button" aria-label="Нравится"></button>
+          <button className={cardLikeButtonClassName} type="button" aria-label="Нравится" onClick={handleLikeClick}></button>
           <div className="card__like-counter">{card.likes.length}</div>
         </div>
       </div>

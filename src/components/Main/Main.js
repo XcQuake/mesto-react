@@ -1,7 +1,6 @@
 import React from 'react';
 import api from '../../utils/api';
 import Card from '../Card/Card';
-import avatar from '../../images/avatar.jpg';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
@@ -14,7 +13,16 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
         setCards(cards)
       })
       .catch(err => console.log(err))
-  }, [])
+  }, []);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((cards) => cards.map((oldCard) => oldCard._id === card._id ? newCard : oldCard));
+      })
+  };
 
   return (
     <main className="main">
@@ -31,7 +39,7 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
       </section>
       <section className="gallery" aria-label="Галерея">
         <ul className='gallery__list'> 
-          {cards.map((item) => <Card key = {item._id} card = {item} onCardClick = {onCardClick}/> )}
+          {cards.map((item) => <Card key = {item._id} card = {item} onCardClick = {onCardClick} onCardLike = {handleCardLike}/> )}
         </ul>
       </section>
     </main>
