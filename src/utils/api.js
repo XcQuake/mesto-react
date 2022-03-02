@@ -18,6 +18,18 @@ class Api {
       .then(res => this._processResult(res))
   }
 
+  setUserInfo({name, about}) {
+    return fetch(`${this._link}/users/me`, {
+      method: 'PATCH', 
+      headers: this._headers, 
+      body: JSON.stringify({
+        name: name,
+        about: about
+      })
+    })
+      .then(res => this._processResult(res))
+  }
+
   getInitialCards() {
     return fetch(`${this._link}/cards`, {
       method: 'GET', 
@@ -28,18 +40,6 @@ class Api {
 
   getFullData() {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
-  }
-
-  changeProfile({name, about}) {
-    return fetch(`${this._link}/users/me`, {
-      method: 'PATCH', 
-      headers: this._headers, 
-      body: JSON.stringify({
-        name: name,
-        about: about
-      })
-    })
-      .then(res => this._processResult(res))
   }
 
   changeAvatar(item) {
