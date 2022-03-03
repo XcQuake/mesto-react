@@ -42,7 +42,7 @@ class Api {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
 
-  changeAvatar(item) {
+  setUserAvatar(item) {
     return fetch(`${this._link}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,

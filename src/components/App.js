@@ -7,6 +7,7 @@ import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -50,6 +51,14 @@ function App() {
       .catch(err => console.log(err))
   }
 
+  function handleUpdateAvatar(avatar) {
+    api.setUserAvatar(avatar)
+      .then((user) => {
+        setCurrentUser(user);
+        closeAllPopups();
+      })
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -69,7 +78,7 @@ function App() {
       />
       <Footer />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
       <PopupWithForm title={'Новое место'} name={'card'} buttonText={'Создать'} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
         <label className="popup__field">
           <input name="name" type="text" className="popup__input popup__input_type_name" id="title" placeholder="Название" minLength="2" maxLength="30" required />
@@ -80,13 +89,7 @@ function App() {
           <span className="popup__input-error link-error"></span>
         </label>
       </PopupWithForm>
-      <PopupWithForm title = {'Обновить аватар'} name = {'avatar'} buttonText = {'Сохранить'} isOpen = {isEditAvatarPopupOpen} onClose = {closeAllPopups}>
-        <label className="popup__field">
-          <input name="avatar" type="url" className="popup__input popup__input_type_avatar-link" id='avatar' placeholder="Ссылка на аватар" maxLength="250" required />
-          <span className="popup__input-error avatar-error"></span>
-        </label>
-      </PopupWithForm>
-      <ImagePopup card = {selectedCard} isOpen = {isImagePopupOpen} onClose = {closeAllPopups}></ImagePopup>
+      <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups}></ImagePopup>
     </CurrentUserContext.Provider>
   );
 };
