@@ -23,7 +23,8 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
         <ul className='gallery__list'> 
           {cards.map((item) => <Card 
                                 key = {item._id} 
-                                card = {item} onCardClick = {onCardClick} 
+                                card = {item} 
+                                onCardClick = {onCardClick} 
                                 onCardLike = {onCardLike} 
                                 onCardDelete = {onCardDelete} 
                                 />)

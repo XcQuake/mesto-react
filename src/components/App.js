@@ -19,6 +19,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [selectedCard, setSelectedCard] = React.useState({});
 
   React.useEffect(() => {
     api.getFullData()
@@ -29,13 +30,6 @@ function App() {
       .catch(err => console.log(err))
   }, []);
 
-  // React.useEffect(() => {
-  //   api.getUserInfo()
-  //     .then(user => setCurrentUser(user))
-  //     .catch(err => console.log(err))
-  // }, []);
-
-  const [selectedCard, setSelectedCard] = React.useState({});
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -49,6 +43,11 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   }
 
+  function handleCardClick(card) {
+    setSelectedCard(card);
+    setIsImagePopupOpen(true);
+  }
+
   function handleAddPlaceSubmit(newCard) {
     api.addCard(newCard)
       .then((newCard) => {
@@ -56,11 +55,6 @@ function App() {
         closeAllPopups();
       })
       .catch(err => console.log(err))
-  }
-
-  function handleCardClick(card) {
-    setSelectedCard(card);
-    setIsImagePopupOpen(true);
   }
 
   function handleUpdateUser({name, about}) {

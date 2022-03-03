@@ -24,7 +24,16 @@ export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
       onSubmit={handleSubmit}
     >
       <label className="popup__field">
-        <input name="avatar" ref={inputRef} type="url" className="popup__input popup__input_type_avatar-link" id='avatar' placeholder="Ссылка на аватар" maxLength="250" required />
+        <input 
+          name="avatar" 
+          ref={inputRef} 
+          type="url" 
+          className="popup__input popup__input_type_avatar-link" 
+          id='avatar' 
+          placeholder="Ссылка на аватар" 
+          maxLength="250" 
+          required 
+        />
         <span className="popup__input-error avatar-error"></span>
       </label>
     </PopupWithForm>
