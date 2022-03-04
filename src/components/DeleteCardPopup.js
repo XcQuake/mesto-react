@@ -1,7 +1,6 @@
 import PopupWithForm from './PopupWithForm';
 
 export default function DeleteCardPopup({card, isOpen, onClose, onDeleteCard, isDataLoad}) {
-  
   function handleDeleteCard(e) {
     e.preventDefault();
     onDeleteCard(card);

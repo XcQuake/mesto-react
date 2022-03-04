@@ -33,7 +33,7 @@ function App() {
       .catch(err => console.log(err))
   }, []);
 
-
+  // Функции открытия попапов
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
@@ -51,6 +51,7 @@ function App() {
     setIsImagePopupOpen(true);
   }
 
+  // Обновление информации о пользователе
   function handleUpdateUser({name, about}) {
     setIsDataLoad(true);
 
@@ -92,7 +93,11 @@ function App() {
 
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards((cards) => cards.map((oldCard) => oldCard._id === card._id ? newCard : oldCard));
+        setCards((cards) => cards.map((oldCard) => 
+          oldCard._id === card._id 
+          ? newCard 
+          : oldCard
+        ));
       })
       .catch(err => console.log(err))
   }

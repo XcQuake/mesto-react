@@ -13,7 +13,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser, isDataL
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser])
+  }, [currentUser, isOpen])
 
   function handleChangeName(e) {
     setName(e.target.value);
@@ -36,6 +36,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser, isDataL
     setIsTouched(true)
   }
 
+  // Валидация форм
   const nameValid = useValidation(name, {minLength: 2, isEmpty: true});
   const descriptionValid = useValidation(description, {minLength: 2, isEmpty: true});
   const buttonClassName = `button popup__confirm-button ${!nameValid.validity || !descriptionValid.validity ? 'popup__confirm-button_inactive' : ''}`

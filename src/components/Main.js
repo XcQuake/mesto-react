@@ -21,11 +21,11 @@ export default function Main({onEditProfile, onAddPlace, onEditAvatar, onCardCli
       <section className="gallery" aria-label="Галерея">
         <ul className='gallery__list'> 
           {cards.map((item) => <Card 
-                                key = {item._id} 
-                                card = {item} 
-                                onCardClick = {onCardClick} 
-                                onCardLike = {onCardLike} 
-                                onCardDelete = {onCardDelete} 
+                                  key = {item._id} 
+                                  card = {item} 
+                                  onCardClick = {onCardClick} 
+                                  onCardLike = {onCardLike} 
+                                  onCardDelete = {onCardDelete} 
                                 />)
           }
         </ul>
