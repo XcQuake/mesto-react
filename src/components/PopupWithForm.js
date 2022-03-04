@@ -1,4 +1,4 @@
-export default function PopupWithForm({name, title, buttonText, isOpen, onClose, children, onSubmit}) {
+export default function PopupWithForm({name, title, isOpen, onClose, children, onSubmit}) {
   const popupClassName = `popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`;
 
   return (

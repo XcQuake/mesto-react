@@ -22,6 +22,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({name: 'Жак-Ив Кусто', about: 'Исследователь океана'});
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
+  const [isDataLoad, setIsDataLoad] = useState(false);
 
   useEffect(() => {
     api.getFullData()
@@ -50,30 +51,40 @@ function App() {
     setIsImagePopupOpen(true);
   }
 
-  function handleAddPlaceSubmit(newCard) {
-    api.addCard(newCard)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
-        closeAllPopups();
-      })
-      .catch(err => console.log(err))
-  }
-
   function handleUpdateUser({name, about}) {
+    setIsDataLoad(true);
+
     api.setUserInfo({name, about})
       .then((user) => {
         setCurrentUser(user);
+        setIsDataLoad(false);
         closeAllPopups();
       })
       .catch(err => console.log(err))
   }
 
   function handleUpdateAvatar(avatar) {
+    setIsDataLoad(true);
+
     api.setUserAvatar(avatar)
       .then((user) => {
         setCurrentUser(user);
+        setIsDataLoad(false);
         closeAllPopups();
       })
+  }
+
+  // Манипуляции с карточкой
+  function handleAddPlaceSubmit(newCard) {
+    setIsDataLoad(true);
+
+    api.addCard(newCard)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        setIsDataLoad(false)
+        closeAllPopups();
+      })
+      .catch(err => console.log(err))
   }
 
   function handleCardLike(card) {
@@ -90,11 +101,14 @@ function App() {
     setSelectedCard(card);
     setIsDeleteCardPopupOpen(true);
   }
-  
+
   function handleCardDelete(card) {
+    setIsDataLoad(true);
+
     api.deleteCard(card._id)
       .then(() => {
         setCards((cards) => cards.filter(oldCard => oldCard._id !== card._id));
+        setIsDataLoad(false)
         closeAllPopups();
       })
       .catch(err => console.log(err))
@@ -122,11 +136,11 @@ function App() {
         onCardDelete = {handleCardDeleteClick}
       />
       <Footer />
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
-      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} isDataLoad={isDataLoad}/>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} isDataLoad={isDataLoad}/>
+      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} isDataLoad={isDataLoad}/>
       <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
-      <DeleteCardPopup card={selectedCard} isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete}/>
+      <DeleteCardPopup card={selectedCard} isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} onDeleteCard={handleCardDelete} isDataLoad={isDataLoad}/>
     </CurrentUserContext.Provider>
   );
 };

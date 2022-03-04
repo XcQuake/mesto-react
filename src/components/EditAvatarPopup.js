@@ -1,8 +1,8 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
-  const inputRef = React.useRef('');
+export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isDataLoad}) {
+  const inputRef = React.useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -36,6 +36,9 @@ export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
         />
         <span className="popup__input-error avatar-error"></span>
       </label>
+      <button className="button popup__confirm-button" type="submit">
+        {isDataLoad ? 'Обновить...' : 'Обновить'}
+      </button>
     </PopupWithForm>
   )
 }

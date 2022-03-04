@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import PopupWithForm from "./PopupWithForm";
 import {useValidation} from './useValidation'
 
-export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
+export default function AddPlacePopup({isOpen, onClose, onAddPlace, isDataLoad}) {
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [isTouched, setIsTouched] = useState(false);
@@ -80,6 +80,7 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
         {(isTouched && linkValid.urlError) && <span className="popup__input-error link-error">{linkValid.errorMessage}</span>}
       </label>
       <button className={buttonClassName} disabled={!linkValid.validity || !titleValid.validity} type="submit">
+        {isDataLoad ? 'Создать...' : 'Создать'}
       </button>
     </PopupWithForm>
   )

@@ -3,7 +3,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 import { useValidation } from './useValidation';
 
-export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
+export default function EditProfilePopup({isOpen, onClose, onUpdateUser, isDataLoad}) {
   const currentUser = useContext(CurrentUserContext);
   
   const [name, setName] = useState('');
@@ -81,6 +81,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
         {(isTouched && descriptionValid.minLengthError) && <span className="popup__input-error link-error">{descriptionValid.errorMessage}</span>}
       </label>
       <button className={buttonClassName} disabled={!nameValid.validity || !descriptionValid.validity} type="submit">
+        {isDataLoad ? 'Сохранить...' : 'Сохранить'}
       </button>
     </PopupWithForm>
   )
