@@ -1,5 +1,5 @@
 export default function ImagePopup({card, isOpen, onClose}) {
-  const popupClassName = (`popup popup_type_image ${isOpen ? 'popup_opened' : ''}`);
+  const popupClassName = (`popup popup_type_image ${isOpen && 'popup_opened'}`);
 
   return (
     <div className={popupClassName} >

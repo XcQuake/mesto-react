@@ -38,7 +38,7 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace, isDataLoad})
   // Валидация форм
   const linkValid = useValidation(link, {isEmpty: true, isUrl: true});
   const titleValid = useValidation(title, {minLength: 2, isEmpty: true});
-  const buttonClassName = `button popup__confirm-button ${!linkValid.validity || !titleValid.validity ? 'popup__confirm-button_inactive' : ''}`
+  const buttonClassName = `button popup__confirm-button ${(!linkValid.validity || !titleValid.validity) && 'popup__confirm-button_inactive'}`
 
   return (
     <PopupWithForm 

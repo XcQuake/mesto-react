@@ -39,7 +39,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser, isDataL
   // Валидация форм
   const nameValid = useValidation(name, {minLength: 2, isEmpty: true});
   const descriptionValid = useValidation(description, {minLength: 2, isEmpty: true});
-  const buttonClassName = `button popup__confirm-button ${!nameValid.validity || !descriptionValid.validity ? 'popup__confirm-button_inactive' : ''}`
+  const buttonClassName = `button popup__confirm-button ${(!nameValid.validity || !descriptionValid.validity) && 'popup__confirm-button_inactive'}`
 
   return (
     <PopupWithForm 
