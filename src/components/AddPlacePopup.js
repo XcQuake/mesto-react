@@ -1,10 +1,10 @@
-import React from "react";
+import {useState, useEffect} from "react";
 import PopupWithForm from "./PopupWithForm";
 import {useValidation} from './useValidation'
 
 export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
-  const [title, setTitle] = React.useState('');
-  const [link, setLink] = React.useState('');
+  const [title, setTitle] = useState('');
+  const [link, setLink] = useState('');
   const [isTouched, setIsTouched] = useState(false);
 
   function handleAddTitle(e) {
@@ -26,7 +26,10 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
       name: title,
       link: link
     });
+  }
 
+  // Очищение формы при открытии
+  useEffect(() => {
     setTitle('');
     setLink('');
     setIsTouched(false);
