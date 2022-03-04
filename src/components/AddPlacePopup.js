@@ -1,9 +1,11 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
+import {useValidation} from './useValidation'
 
 export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
   const [title, setTitle] = React.useState('');
   const [link, setLink] = React.useState('');
+  const [isTouched, setIsTouched] = useState(false);
 
   function handleAddTitle(e) {
     setTitle(e.target.value);
@@ -11,6 +13,10 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
   function handleAddLink(e) {
     setLink(e.target.value);
+  }
+
+  function handleOnBlur() {
+    setIsTouched(true)
   }
 
   function handleSubmit(e) {
@@ -23,13 +29,18 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
     setTitle('');
     setLink('');
-  }
+    setIsTouched(false);
+  }, [isOpen])
+
+  // Валидация форм
+  const linkValid = useValidation(link, {isEmpty: true, isUrl: true});
+  const titleValid = useValidation(title, {minLength: 2, isEmpty: true});
+  const buttonClassName = `button popup__confirm-button ${!linkValid.validity || !titleValid.validity ? 'popup__confirm-button_inactive' : ''}`
 
   return (
     <PopupWithForm 
       title={'Новое место'} 
       name={'card'} 
-      buttonText={'Создать'} 
       isOpen={isOpen} 
       onClose={onClose} 
       onSubmit={handleSubmit}
@@ -39,7 +50,8 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
           name="name" 
           type="text" 
           value={title} 
-          onChange={handleAddTitle} 
+          onChange={handleAddTitle}
+          onBlur={handleOnBlur}
           className="popup__input popup__input_type_name" 
           id="title" 
           placeholder="Название" 
@@ -47,22 +59,26 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
           maxLength="30" 
           required 
         />
-        <span className="title-error popup__input-error"></span>
+        {(isTouched && titleValid.minLengthError) && <span className="popup__input-error link-error">{titleValid.errorMessage}</span>}
       </label>
       <label className="popup__field">
         <input 
           name="link" 
           type="url" 
           value={link} 
-          onChange={handleAddLink} 
+          onChange={handleAddLink}
+          onBlur={handleOnBlur}
           className="popup__input popup__input_type_link" 
           id="link" 
-          placeholder="Ссылка на картинку" 
+          placeholder="Ссылка на картинку"
           maxLength="250" 
           required 
         />
-        <span className="popup__input-error link-error"></span>
+        {(isTouched && linkValid.urlError) && <span className="popup__input-error link-error">{linkValid.errorMessage}</span>}
       </label>
+      <button className={buttonClassName} disabled={!linkValid.validity || !titleValid.validity} type="submit">
+      </button>
     </PopupWithForm>
   )
 }
+

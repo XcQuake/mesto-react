@@ -1,12 +1,14 @@
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
+import { useValidation } from './useValidation';
 
 export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
   const currentUser = React.useContext(CurrentUserContext);
   
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [isTouched, setIsTouched] = useState(false);
 
   React.useEffect(() => {
     setName(currentUser.name);
@@ -30,11 +32,18 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
     })
   }
 
+  function handleOnBlur() {
+    setIsTouched(true)
+  }
+
+  const nameValid = useValidation(name, {minLength: 2, isEmpty: true});
+  const descriptionValid = useValidation(description, {minLength: 2, isEmpty: true});
+  const buttonClassName = `button popup__confirm-button ${!nameValid.validity || !descriptionValid.validity ? 'popup__confirm-button_inactive' : ''}`
+
   return (
     <PopupWithForm 
         title = {'Редактировать профиль'} 
         name = {'profile'} 
-        buttonText = {'Сохранить'}
         isOpen = {isOpen}
         onClose = {onClose}
         onSubmit = {handleSubmit}
@@ -45,6 +54,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
           type="text" 
           value={name || ''} 
           onChange={handleChangeName} 
+          onBlur={handleOnBlur}
           className="popup__input popup__input_type_name" 
           id="name" 
           placeholder="Имя" 
@@ -52,7 +62,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
           maxLength="40" 
           required 
         />
-        <span className="popup__input-error name-error"></span>
+        {(isTouched && nameValid.minLengthError) && <span className="popup__input-error link-error">{nameValid.errorMessage}</span>}
       </label>
       <label className="popup__field">
         <input 
@@ -60,6 +70,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
           type="text" 
           value={description || ''} 
           onChange={handleChangeDesctiption}
+          onBlur={handleOnBlur}
           className="popup__input popup__input_type_about" 
           id="about" 
           placeholder="О себе" 
@@ -67,8 +78,10 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
           maxLength="200" 
           required 
         />
-        <span className="popup__input-error about-error"></span>
+        {(isTouched && descriptionValid.minLengthError) && <span className="popup__input-error link-error">{descriptionValid.errorMessage}</span>}
       </label>
+      <button className={buttonClassName} disabled={!nameValid.validity || !descriptionValid.validity} type="submit">
+      </button>
     </PopupWithForm>
   )
 }
