@@ -58,10 +58,10 @@ function App() {
     api.setUserInfo({name, about})
       .then((user) => {
         setCurrentUser(user);
-        setIsDataLoad(false);
         closeAllPopups();
       })
       .catch(err => console.log(err))
+      .finally(() => setIsDataLoad(false))
   }
 
   function handleUpdateAvatar(avatar) {
@@ -70,9 +70,9 @@ function App() {
     api.setUserAvatar(avatar)
       .then((user) => {
         setCurrentUser(user);
-        setIsDataLoad(false);
         closeAllPopups();
       })
+      .finally(() => setIsDataLoad(false))
   }
 
   // Манипуляции с карточкой
@@ -82,10 +82,10 @@ function App() {
     api.addCard(newCard)
       .then((newCard) => {
         setCards([newCard, ...cards]);
-        setIsDataLoad(false)
         closeAllPopups();
       })
       .catch(err => console.log(err))
+      .finally(() => setIsDataLoad(false))
   }
 
   function handleCardLike(card) {
