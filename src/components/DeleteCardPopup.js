@@ -9,7 +9,7 @@ export default function DeleteCardPopup({card, isOpen, onClose, onDeleteCard, is
   return (
     <PopupWithForm 
       title={'Вы уверены?'} 
-      name={'avatar'} 
+      name={'confirm'} 
       buttonText={'Да'} 
       isOpen={isOpen} 
       onClose={onClose}
